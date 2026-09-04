@@ -1,6 +1,10 @@
 import os
 import sys
 
+# Force UTF-8 output on Windows to avoid cp1254 encoding errors
+if sys.platform == 'win32':
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+
 class Colors:
     """ANSI color codes for terminal output formatting."""
     RESET = '\033[0m'
