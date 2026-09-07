@@ -68,28 +68,74 @@ etscanner/
 
 ---
 
+## Installation
+
+### 🐧 Linux / Kali / Parrot (Önerilen)
+
+```bash
+# 1. Repoyu klonla
+git clone https://github.com/enesic/etscanner.git
+cd etscanner
+
+# 2. Python sürümünü kontrol et (3.10+ gerekli)
+python3 --version
+
+# 3. Çalıştır
+python3 main.py --help
+```
+
+### 🔄 Güncelleme (En Son Sürüme Geç)
+
+Eğer repoyu daha önce klonladıysan, yeni özellikleri almak için:
+
+```bash
+cd etscanner
+git pull origin master
+```
+
+> VMware'deki sanal makinende çalıştırıyorsan bu komutu VM terminalinde çalıştırman yeterli.
+
+### 🪟 Windows
+
+```powershell
+# Repoyu klonla
+git clone https://github.com/enesic/etscanner.git
+cd etscanner
+
+# Çalıştır
+python main.py --help
+```
+
+> **Windows Notu:** UDP tarama için yönetici (Administrator) olarak çalıştırman gerekebilir.
+
+---
+
 ## Usage
 
 ```bash
-python main.py -t <target> [options]
+# Linux/Kali
+python3 main.py -t <hedef> [seçenekler]
+
+# Windows
+python main.py -t <hedef> [seçenekler]
 ```
 
-### Arguments
+### Tüm Argümanlar
 
-| Flag | Description | Default |
-|------|-------------|---------|
-| `-t` | Target: IP, CIDR, range, hostname | *(required)* |
-| `-p` | Ports to scan (see formats below) | `1-1024` |
-| `--profile` | Port profile name | — |
-| `--top N` | Scan top N ports | — |
-| `--udp` | UDP scan mode | TCP |
-| `--timing` | Timing profile | `normal` |
-| `-c` | Override concurrent connections | profile default |
-| `-T` | Override timeout (seconds) | profile default |
-| `--retry` | Retry count for failed connections | `0` |
-| `--skip-discovery` | Skip host discovery on multi-host scans | off |
-| `-o` | Output file (`.json`, `.csv`, `.txt`) | — |
-| `-d` | Subdomain discovery for a domain | — |
+| Flag | Açıklama | Varsayılan |
+|------|----------|-----------|
+| `-t` | Hedef: IP, CIDR, aralık, hostname | *(zorunlu)* |
+| `-p` | Taranacak portlar (`80,443,1-1024`) | `1-1024` |
+| `--profile` | Port profili adı | — |
+| `--top N` | En yaygın N portu tara | — |
+| `--udp` | UDP tarama modu | TCP |
+| `--timing` | Timing profili | `normal` |
+| `-c` | Eşzamanlı bağlantı sayısını geçersiz kıl | profil varsayılanı |
+| `-T` | Timeout süresini geçersiz kıl (saniye) | profil varsayılanı |
+| `--retry` | Başarısız bağlantılar için yeniden deneme | `0` |
+| `--skip-discovery` | Çoklu hedefte host discovery'yi atla | kapalı |
+| `-o` | Çıktı dosyası (`.json`, `.csv`, `.txt`) | — |
+| `-d` | Domain için subdomain discovery | — |
 
 ---
 
