@@ -5,7 +5,8 @@ from typing import Callable, List, Optional
 class AsyncPortScanner:
     def __init__(self, target_host: str, max_concurrent: int = 100,
                  timeout: float = 1.0, retries: int = 0,
-                 on_progress: Optional[Callable] = None):
+                 on_progress: Optional[Callable] = None,
+                 delay: float = 0.0):
         """
         Initialize the AsyncPortScanner.
 
@@ -14,12 +15,14 @@ class AsyncPortScanner:
         :param timeout: Connection timeout in seconds.
         :param retries: Number of retries for failed connection attempts.
         :param on_progress: Optional callback invoked after each port is checked.
+        :param delay: Seconds to sleep between connection attempts (for stealth).
         """
         self.target_host = target_host
         self.max_concurrent = max_concurrent
         self.timeout = timeout
         self.retries = retries
         self.on_progress = on_progress
+        self.delay = delay
         self.open_ports = []
         self._semaphore = asyncio.Semaphore(self.max_concurrent)
 
@@ -48,6 +51,10 @@ class AsyncPortScanner:
                     # Port is likely closed or filtered
                 except Exception:
                     break  # Unexpected error — don't retry
+
+            # Inter-probe delay for stealth timing profiles
+            if self.delay > 0:
+                await asyncio.sleep(self.delay)
 
             # Notify progress callback
             if self.on_progress:
